@@ -57,6 +57,7 @@ async def work(page):
 		pagination = 1
 		while True:
 			await page.goto(l+'reviews/?page=%s' % pagination)
+			await page.waitForSelector('div[data-widget=listReviewsDesktop]>div')
 			pagination += 1
 			elClass = await page.evaluate('(elements) => elements.childNodes[0].className', (await page.querySelectorAll('div[data-widget=listReviewsDesktop]>div'))[1])
 			try:
@@ -88,11 +89,12 @@ async def work(page):
 
 
 async def main():
-	params = {'headless': True}
+	params = {'headless': False}
 	browser = await launch(**params)
 	page = await browser.newPage()
 	await work(page)
 	await browser.close()
+
 
 if __name__ == '__main__':
 	asyncio.get_event_loop().run_until_complete(main())
