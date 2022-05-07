@@ -89,7 +89,7 @@ async def work(page):
 
 
 async def main():
-	params = {'headless': False}
+	params = {'headless': True}
 	browser = await launch(**params)
 	page = await browser.newPage()
 	await work(page)
